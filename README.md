@@ -13,8 +13,8 @@ To stop press `<ctrl>-c`. Or
 
     % docker-compose stop
 
-Access NICS at [www.nics.coderhythm.io/nics](https://www.nics.coderhythm.io/nics).
-Access OpenAM at [www.nics.coderhythm.io/openam](https://www.nics.coderhythm.io/openam).
+Access NICS at [www.nicsdev.tabordasolutions.net/nics](https://www.nicsdev.tabordasolutions.net/nics).
+Access OpenAM at [www.nicsdev.tabordasolutions.net/openam](https://www.nicsdev.tabordasolutions.net/openam).
 
 ## Description
 
@@ -32,7 +32,8 @@ Describe debugging configs.
 1. OpenAM web application and policy agent downloaded and in correct place in `nics-openam` and `nics-www` projects
 1. Apache configuration copied and updated with correct hostnames in `nics-www` project
 1. NICS-Web application configured as per instructions in `nics-web`, with files in config directory
-1. EM-API application configured as per instructions in `nics-emapi` project, with files in config and tomcat-config directory
+1. EM-API application configured as per instructions in `nics-emapi` project, with files in config and tomcat-config
+ directory
 1. [Docker Compose] (1.9.0)
 1. [Docker] host with at least 10 GB available :ram: and 2 GB available disk space; [Docker] may be local to the machine
  used for [Docker Compose] or may be running on a remote host
@@ -62,15 +63,16 @@ NICS requires a consistent canonical hostname for the system. OpenAM places furt
  extent that the only effective options must contain a host, zero or more subdomains, a domain and a known top level
  domain (TLD). The simplest way to satisfy these requirements is to choose a valid domain to use for development and
  test and map the [Docker] server address to your [Docker] host using an /etc/hosts file. In the following example, the
- [Docker] server address is 10.90.223.202 and the domain used for development and testing is nics.coderhythm.io.
+ [Docker] server address is 10.90.223.202 and the domain used for development and testing is
+ `nicsdev.tabordasolutions.net`.
 
-    10.90.223.202 nics.coderhythm.io am.nics.coderhythm.io www.nics.coderhythm.io
+    10.90.223.202 nicsdev.tabordasolutions.net am.nicsdev.tabordasolutions.net www.nicsdev.tabordasolutions.net
 
 Note three hostnames in use
 
-1. `am.nics.coderhythm.io` is the hostname used to access the OpenAM user interface
-1. `www.nics.coderhythm.io` is the hostname used to access the NICS web-based user interface
-1. `nics.coderhythm.io` is hostname used to test the redirect to the www host
+1. `am.nicsdev.tabordasolutions.net` is the hostname used to access the OpenAM user interface
+1. `www.nicsdev.tabordasolutions.net` is the hostname used to access the NICS web-based user interface
+1. `nicsdev.tabordasolutions.net` is hostname used to test the redirect to the www host
 
 ### Running
 
@@ -78,17 +80,17 @@ Refer to [Docker Compose] documentation for complete details but, for basic usag
 
     % docker-compose up --build
 
-This will cause [Docker Compose] to pull or build images and deploy the system to [Docker]. You will see aggreggated logs
-in the terminal window running [Docker Compose]. When you're done testing, pressing `<ctrl>-c` will gracefully shut down
-the system.
+This will cause [Docker Compose] to pull or build images and deploy the system to [Docker]. You will see aggreggated
+logs in the terminal window running [Docker Compose]. When you're done testing, pressing `<ctrl>-c` will gracefully
+shut down the system.
 
 Note that a running system is only the first step to a functional system. Additional configuration will be required
 before the system will function as designed.
 
 ## Options
 
-[Docker Compose] maps the following ports from the [Docker] host to the containers based on the `docker-compose.yml` file.
-You may edit these mappings if needed.
+[Docker Compose] maps the following ports from the [Docker] host to the containers based on the `docker-compose.yml` 
+file. You may edit these mappings if needed.
 
 | Docker Port | Container Port | Purpose |
 |---|---|---|
