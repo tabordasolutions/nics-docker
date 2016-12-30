@@ -21,7 +21,7 @@ Access OpenAM at [www.nics.coderhythm.io/openam](https://www.nics.coderhythm.io/
 Include diagram here.
 Describe debugging configs.
 
-#### Prerequisites
+### Prerequisites
 
 1. Java 8 (1.8.0_91)
 1. Maven (3.3.9)
@@ -31,6 +31,8 @@ Describe debugging configs.
 1. Each of the web application projects built and packaged on the local filesystem
 1. OpenAM web application and policy agent downloaded and in correct place in `nics-openam` and `nics-www` projects
 1. Apache configuration copied and updated with correct hostnames in `nics-www` project
+1. NICS-Web application configured as per instructions in `nics-web`, with files in config directory
+1. EM-API application configured as per instructions in `nics-emapi` project, with files in config and tomcat-config directory
 1. [Docker Compose] (1.9.0)
 1. [Docker] host with at least 10 GB available :ram: and 2 GB available disk space; [Docker] may be local to the machine
  used for [Docker Compose] or may be running on a remote host
@@ -54,7 +56,7 @@ The NICS repositories must be located in the same subdirectory, like this
 
 This structure allows [Docker Compose] to build [Docker] images required to run the system.
 
-#### Configuration
+### Configuration
 
 NICS requires a consistent canonical hostname for the system. OpenAM places further requirements on the hostname to the
  extent that the only effective options must contain a host, zero or more subdomains, a domain and a known top level
@@ -70,7 +72,7 @@ Note three hostnames in use
 1. `www.nics.coderhythm.io` is the hostname used to access the NICS web-based user interface
 1. `nics.coderhythm.io` is hostname used to test the redirect to the www host
 
-#### Running
+### Running
 
 Refer to [Docker Compose] documentation for complete details but, for basic usage, you will likely want to run
 
