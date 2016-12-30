@@ -1,0 +1,96 @@
+# Ports
+#   5432  => postgis:5432
+#   5672  => rabbitmq:5672
+#   7082  => nicsweb debug
+#   7083  => emapi debug
+#   8000  => openam debug
+#   8080  => proxy:80
+#   8443  => proxy:443
+#   8081  => web:80
+#   8082  => nicsweb:8080
+#   8083  => emapi:8080
+#   8084  => geoserver:8080
+#   9000  => openam:8080
+#   9443  => openam:8443
+#   15672 => rabbitmq:15672
+#   OpenDJ?
+
+emapi:
+  build: ../em-api
+  environment:
+    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+  links:
+    - geoserver
+    - postgis
+    - rabbitmq
+  ports:
+    - "7083:8000"
+    - "8083:8080"
+  volumes:
+    - /var/lib/docker/volumes/nics/emapi:/var/lib/emapi
+
+geoserver:
+  image: thklein/geoserver
+  links:
+    - postgis
+  ports:
+    - "8084:8080"
+  volumes:
+    - /var/lib/docker/volumes/nics/geoserver:/geoserver_data
+
+nicsweb:
+  build: ../nics-web
+  environment:
+    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+  links:
+    - emapi
+    - rabbitmq
+  ports:
+    - "7082:8000"
+    - "8082:8080"
+
+postgis:
+  image: mdillon/postgis
+  ports:
+    - "5432:5432"
+  volumes:
+    - /var/lib/docker/volumes/nics/postgis:/var/lib/postgresql
+
+proxy:
+  build: ../nics-proxy
+  ports:
+    - "8080:80"
+    - "8443:443"
+  links:
+    - web
+
+rabbitmq:
+  image: rabbitmq:management
+  hostname: nicsrabbit
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+
+web:
+  build: ../nics-www
+  links:
+    - emapi
+    - geoserver
+    - openam
+    - nicsweb
+  ports:
+    - "8081:80"
+  volumes:
+    - /var/lib/docker/volumes/nics/emapi:/var/www/html/static
+
+openam:
+  build: ../nics-openam
+  hostname: am.nics.coderhythm.io
+  environment:
+    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+  ports:
+    - "8000:8000"
+    - "9000:8080"
+    - "9443:8443"
+  volumes:
+    - /var/lib/docker/volumes/nics/openam:/root/openam
