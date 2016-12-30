@@ -13,15 +13,33 @@ To stop press `<ctrl>-c`. Or
 
     % docker-compose stop
 
-Access NICS at [www.nicsdev.tabordasolutions.net/nics](https://www.nicsdev.tabordasolutions.net/nics).
-Access OpenAM at [www.nicsdev.tabordasolutions.net/openam](https://www.nicsdev.tabordasolutions.net/openam).
+Access NICS at [www.nicsdev.tabordasolutions.net/nics](https://www.nicsdev.tabordasolutions.net:8443/nics).
+Access OpenAM at [www.nicsdev.tabordasolutions.net/openam](https://www.nicsdev.tabordasolutions.net:8443/openam).
 
 ## Description
 
-Include diagram here.
-Describe debugging configs.
+When it works you should have something like this running on your [Docker] host
+
+```
+chris@pivot:~ % docker ps
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                                                                        NAMES
+bb08ebd6e3a8        nicsdocker_proxy       "/docker-entrypoint.s"   9 minutes ago       Up 2 minutes        0.0.0.0:8080->80/tcp, 0.0.0.0:8443->443/tcp                                                  nics_proxy_1
+c286e3df6e5e        nicsdocker_nicsweb     "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:7082->8000/tcp, 0.0.0.0:8082->8080/tcp                                               nics_nicsweb_1
+6c7e81c3a291        nicsdocker_emapi       "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:7083->8000/tcp, 0.0.0.0:8083->8080/tcp                                               nics_emapi_1
+c7c1a217dc95        thklein/geoserver      "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:8084->8080/tcp                                                                       nics_geoserver_1
+02b00c4f234a        mdillon/postgis        "/docker-entrypoint.s"   9 minutes ago       Up 2 minutes        0.0.0.0:5432->5432/tcp                                                                       nics_postgis_1
+9d61d9e22222        nicsdocker_openam      "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp, 0.0.0.0:9000->8080/tcp, 0.0.0.0:9443->8443/tcp                       nics_openam_1
+7f897f1592ae        rabbitmq:management    "docker-entrypoint.sh"   9 minutes ago       Up 2 minutes        4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   nics_rabbitmq_1
+
+```
+
+Additionally, the Java Tomcat hosts will each be configured with Java Debug Wire Protocol agent running and a port
+mapped to the [Docker] host for debugging. Reference table below for port numbers.
 
 ### Prerequisites
+
+The following are required to run a NICS 6.x instance using [Docker Compose]. Where applicable, the last tested software
+version number is included in parenthesis.
 
 1. Java 8 (1.8.0_91)
 1. Maven (3.3.9)
@@ -113,6 +131,10 @@ file. You may edit these mappings if needed.
 `/var/lib/docker/volumes` but may be changed in the `docker-compose.yml` file.
 
 ## See Also
+
+### Next Steps
+
+
 
 ### Repositories
 

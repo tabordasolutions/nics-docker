@@ -1,4 +1,5 @@
 emapi:
+  container_name: nics_emapi_1
   build: ../em-api
   environment:
     - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
@@ -13,6 +14,7 @@ emapi:
     - /var/lib/docker/volumes/nics/emapi:/var/lib/emapi
 
 geoserver:
+  container_name: nics_geoserver_1
   image: thklein/geoserver
   links:
     - postgis
@@ -22,6 +24,7 @@ geoserver:
     - /var/lib/docker/volumes/nics/geoserver:/geoserver_data
 
 nicsweb:
+  container_name: nics_nicsweb_1
   build: ../nics-web
   environment:
     - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
@@ -33,6 +36,7 @@ nicsweb:
     - "8082:8080"
 
 postgis:
+  container_name: nics_postgis_1
   image: mdillon/postgis
   ports:
     - "5432:5432"
@@ -40,6 +44,7 @@ postgis:
     - /var/lib/docker/volumes/nics/postgis:/var/lib/postgresql
 
 proxy:
+  container_name: nics_proxy_1
   build: ../nics-proxy
   ports:
     - "8080:80"
@@ -48,6 +53,7 @@ proxy:
     - web
 
 rabbitmq:
+  container_name: nics_rabbitmq_1
   image: rabbitmq:management
   hostname: nicsrabbit
   ports:
@@ -55,6 +61,7 @@ rabbitmq:
     - "15672:15672"
 
 web:
+  container_name: nics_web_1
   build: ../nics-www
   links:
     - emapi
@@ -67,8 +74,9 @@ web:
     - /var/lib/docker/volumes/nics/emapi:/var/www/html/static
 
 openam:
+  container_name: nics_openam_1
   build: ../nics-openam
-  hostname: am.nics.coderhythm.io
+  hostname: am.nicsdev.tabordasolutions.net
   environment:
     - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
   ports:
