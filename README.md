@@ -134,7 +134,7 @@ file. You may edit these mappings if needed.
 
 ### Next Steps
 
-
+Check out the [nics-common/docs] directory for additional NICS build and configuration details.
 
 ### Repositories
 
@@ -143,7 +143,7 @@ file. You may edit these mappings if needed.
 | em-api | https://github.com/hadrsystems/em-api | https://github.com/tabordasolutions/em-api |
 | iweb-modules | https://github.com/hadrsystems/iweb-modules | |
 | nics-assembly | https://github.com/hadrsystems/nics-assembly | |
-| nics-common | https://github.com/hadrsystems/nics-common | |
+| nics-common | https://github.com/hadrsystems/nics-common | https://github.com/tabordasolutions/nics-common |
 | nics-db | https://github.com/hadrsystems/nics-db | https://github.com/tabordasolutions/nics-db |
 | nics-docker | | https://github.com/tabordasolutions/nics-docker |
 | nics-openam | | https://github.com/tabordasolutions/nics-openam |
@@ -157,3 +157,4 @@ merged to master.
 
 [Docker]: https://docs.docker.com/
 [Docker Compose]: https://docs.docker.com/compose/
+[nics-common/docs]: https://github.com/tabordasolutions/nics-common/tree/master/docs
