@@ -7,6 +7,7 @@ emapi:
     - geoserver
     - postgis
     - rabbitmq
+    - openam:am.nicsdev.tabordasolutions.net
   ports:
     - "7083:8000"
     - "8083:8080"
@@ -30,6 +31,7 @@ nicsweb:
     - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
   links:
     - emapi
+    - openam:am.nicsdev.tabordasolutions.net
     - rabbitmq
   ports:
     - "7082:8000"
@@ -66,7 +68,7 @@ web:
   links:
     - emapi
     - geoserver
-    - openam
+    - openam:am.nicsdev.tabordasolutions.net
     - nicsweb
   ports:
     - "8081:80"
