@@ -13,8 +13,8 @@ To stop press `<ctrl>-c`. Or
 
     % docker-compose stop
 
-Access NICS at [www.nicsdev.tabordasolutions.net/nics](https://www.nicsdev.tabordasolutions.net:8443/nics).
-Access OpenAM at [www.nicsdev.tabordasolutions.net/openam](https://www.nicsdev.tabordasolutions.net:8443/openam).
+Access NICS at [www.nicsdev.tabordasolutions.net/nics](https://www.nicsdev.tabordasolutions.net:3443/nics).
+Access OpenAM at [am.nicsdev.tabordasolutions.net/openam](http://am.nicsdev.tabordasolutions.net:8080/openam).
 
 ## Description
 
@@ -23,12 +23,12 @@ When it works you should have something like this running on your [Docker] host
 ```
 chris@pivot:~ % docker ps
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                                                                        NAMES
-bb08ebd6e3a8        nicsdocker_proxy       "/docker-entrypoint.s"   9 minutes ago       Up 2 minutes        0.0.0.0:8080->80/tcp, 0.0.0.0:8443->443/tcp                                                  nics_proxy_1
+bb08ebd6e3a8        nicsdocker_proxy       "/docker-entrypoint.s"   9 minutes ago       Up 2 minutes        0.0.0.0:3000->80/tcp, 0.0.0.0:3443->443/tcp                                                  nics_proxy_1
 c286e3df6e5e        nicsdocker_nicsweb     "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:7082->8000/tcp, 0.0.0.0:8082->8080/tcp                                               nics_nicsweb_1
 6c7e81c3a291        nicsdocker_emapi       "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:7083->8000/tcp, 0.0.0.0:8083->8080/tcp                                               nics_emapi_1
 c7c1a217dc95        thklein/geoserver      "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:8084->8080/tcp                                                                       nics_geoserver_1
 02b00c4f234a        mdillon/postgis        "/docker-entrypoint.s"   9 minutes ago       Up 2 minutes        0.0.0.0:5432->5432/tcp                                                                       nics_postgis_1
-9d61d9e22222        nicsdocker_openam      "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp, 0.0.0.0:9000->8080/tcp, 0.0.0.0:9443->8443/tcp                       nics_openam_1
+9d61d9e22222        nicsdocker_openam      "catalina.sh run"        9 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp, 0.0.0.0:8080->8080/tcp, 0.0.0.0:8443->8443/tcp                       nics_openam_1
 7f897f1592ae        rabbitmq:management    "docker-entrypoint.sh"   9 minutes ago       Up 2 minutes        4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   nics_rabbitmq_1
 
 ```
@@ -117,14 +117,14 @@ file. You may edit these mappings if needed.
 | 7082 | nicsweb:8000 | Java debug |
 | 7083 | emapi:8000 | Java debug |
 | 8000 | openam:8000 | Java debug |
-| 8080 | proxy:80 | HTTP |
+| 3000 | proxy:80 | HTTP |
 | 8081 | web:80 | HTTP |
 | 8082 | nicsweb:8080 | HTTP |
 | 8083 | emapi:8080 | HTTP |
 | 8084 | geoserver:8080 | HTTP |
-| 8443 | proxy:443 | HTTPS |
-| 9000 | openam:8080 | HTTP |
-| 9443 | openam:8443 | HTTPS |
+| 3443 | proxy:443 | HTTPS |
+| 8080 | openam:8080 | HTTP |
+| 8443 | openam:8443 | HTTPS |
 | 15672 | rabbitmq:15672 | RabbitMQ admin |
 
 [Docker Compose] maps several volumes to the [Docker] host filesystem. These volumes will be stored in 

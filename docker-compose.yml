@@ -1,89 +1,95 @@
-emapi:
-  container_name: nics_emapi_1
-  build: ../em-api
-  environment:
-    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
-  links:
-    - geoserver
-    - postgis
-    - rabbitmq
-    - openam:am.nicsdev.tabordasolutions.net
-  ports:
-    - "7083:8000"
-    - "8083:8080"
-  volumes:
-    - /var/lib/docker/volumes/nics/emapi:/var/lib/emapi
+version: "3"
+services:
+  emapi:
+    container_name: nics_emapi_1
+    build: ../em-api
+    environment:
+      - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+    depends_on:
+      - geoserver
+      - postgis
+      - rabbitmq
+      - openam
+    ports:
+      - "7083:8000"
+      - "8083:8080"
+    volumes:
+      - ~/.docker/volumes/nics/emapi:/var/lib/emapi
 
-geoserver:
-  container_name: nics_geoserver_1
-  image: thklein/geoserver
-  links:
-    - postgis
-  ports:
-    - "8084:8080"
-  volumes:
-    - /var/lib/docker/volumes/nics/geoserver:/geoserver_data
+  geoserver:
+    container_name: nics_geoserver_1
+    image: thklein/geoserver
+    depends_on:
+      - postgis
+    ports:
+      - "8084:8080"
+    volumes:
+      - ~/.docker/volumes/nics/geoserver:/geoserver_data
 
-nicsweb:
-  container_name: nics_nicsweb_1
-  build: ../nics-web
-  environment:
-    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
-  links:
-    - emapi
-    - openam:am.nicsdev.tabordasolutions.net
-    - rabbitmq
-  ports:
-    - "7082:8000"
-    - "8082:8080"
+  nicsweb:
+    container_name: nics_nicsweb_1
+    build: ../nics-web
+    environment:
+      - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+    depends_on:
+      - emapi
+      - openam
+      - rabbitmq
+    ports:
+      - "7082:8000"
+      - "8082:8080"
 
-postgis:
-  container_name: nics_postgis_1
-  image: mdillon/postgis
-  ports:
-    - "5432:5432"
-  volumes:
-    - /var/lib/docker/volumes/nics/postgis:/var/lib/postgresql
+  postgis:
+    container_name: nics_postgis_1
+    image: mdillon/postgis
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/.docker/volumes/nics/postgis:/var/lib/postgresql
 
-proxy:
-  container_name: nics_proxy_1
-  build: ../nics-proxy
-  ports:
-    - "8080:80"
-    - "8443:443"
-  links:
-    - web
+  proxy:
+    container_name: nics_proxy_1
+    build: ../nics-proxy
+    ports:
+      - "3000:80"
+      - "3443:443"
+    depends_on:
+      - web
 
-rabbitmq:
-  container_name: nics_rabbitmq_1
-  image: rabbitmq:management
-  hostname: nicsrabbit
-  ports:
-    - "5672:5672"
-    - "15672:15672"
+  rabbitmq:
+    container_name: nics_rabbitmq_1
+    image: rabbitmq:management
+    hostname: nicsrabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
-web:
-  container_name: nics_web_1
-  build: ../nics-www
-  links:
-    - emapi
-    - geoserver
-    - openam:am.nicsdev.tabordasolutions.net
-    - nicsweb
-  ports:
-    - "8081:80"
-  volumes:
-    - /var/lib/docker/volumes/nics/emapi:/var/www/html/static
+  web:
+    container_name: nics_web_1
+    build: ../nics-www
+    depends_on:
+      - emapi
+      - geoserver
+      - openam
+      - nicsweb
+    ports:
+      - "8081:80"
+    volumes:
+      - ~/.docker/volumes/nics/emapi:/var/www/html/static
 
-openam:
-  container_name: nics_openam_1
-  build: ../nics-openam
-  hostname: am.nicsdev.tabordasolutions.net
-  environment:
-    - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
-  ports:
-    - "8000:8000"
-    - "9000:8080"
-    - "9443:8443"
-  volumes:
-    - /var/lib/docker/volumes/nics/openam:/root/openam
+  openam:
+    container_name: nics_openam_1
+    build: ../nics-openam
+    hostname: am.nicsdev.tabordasolutions.net
+    environment:
+      - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - ~/.docker/volumes/nics/openam:/root/openam
+    networks:
+      default:
+        aliases:
+          - am.nicsdev.tabordasolutions.net
