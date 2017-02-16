@@ -45,8 +45,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ~/.docker/volumes/nics/postgis:/var/lib/postgresql
-
+      - ~/.docker/volumes/nics/postgis:/var/lib/postgresql/data
   proxy:
     container_name: nics_proxy_1
     build: ../nics-proxy
@@ -79,6 +78,7 @@ services:
 
   openam:
     container_name: nics_openam_1
+#    image: taborda/nicsdev_openambase
     build: ../nics-openam
     hostname: am.nicsdev.tabordasolutions.net
     environment:
@@ -87,8 +87,6 @@ services:
       - "8000:8000"
       - "8080:8080"
       - "8443:8443"
-    volumes:
-      - ~/.docker/volumes/nics/openam:/root/openam
     networks:
       default:
         aliases:
