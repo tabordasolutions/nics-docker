@@ -14,7 +14,7 @@ services:
       - "7083:8000"
       - "8083:8080"
     volumes:
-      - ~/.docker/volumes/nics/emapi:/var/lib/emapi
+      - static:/var/lib/emapi/
 
   geoserver:
     container_name: nics_geoserver_1
@@ -74,7 +74,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ~/.docker/volumes/nics/emapi:/var/www/html/static
+      - static:/var/www/html/
 
   openam:
     container_name: nics_openam_1
@@ -91,3 +91,5 @@ services:
       default:
         aliases:
           - am.nicsdev.tabordasolutions.net
+volumes:
+  static:
