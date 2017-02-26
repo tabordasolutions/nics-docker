@@ -1,0 +1,16 @@
+version: "3"
+services:
+  emapi:
+    build: ../em-api
+
+  nicsweb:
+    build: ../nics-web
+
+  proxy:
+    build: ../nics-proxy
+
+  web:
+    build: ../nics-www
+
+  openam:
+    build: ../nics-openam

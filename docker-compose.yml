@@ -2,7 +2,7 @@ version: "3"
 services:
   emapi:
     container_name: nics_emapi_1
-    build: ../em-api
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/emapi:e1cfd9e
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
     depends_on:
@@ -18,17 +18,15 @@ services:
 
   geoserver:
     container_name: nics_geoserver_1
-    image: thklein/geoserver
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:latest
     depends_on:
       - postgis
     ports:
       - "8084:8080"
-    volumes:
-      - ~/.docker/volumes/nics/geoserver:/geoserver_data
 
   nicsweb:
     container_name: nics_nicsweb_1
-    build: ../nics-web
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/nicsweb:60b05bb
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
     depends_on:
@@ -41,19 +39,22 @@ services:
 
   postgis:
     container_name: nics_postgis_1
-    image: mdillon/postgis
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/postgis:latest
     ports:
       - "5432:5432"
-    volumes:
-      - ~/.docker/volumes/nics/postgis:/var/lib/postgresql/data
+
   proxy:
     container_name: nics_proxy_1
-    build: ../nics-proxy
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
     ports:
       - "3000:80"
       - "3443:443"
     depends_on:
       - web
+    networks:
+      default:
+        aliases:
+          - www.nicsdev.tabordasolutions.net
 
   rabbitmq:
     container_name: nics_rabbitmq_1
@@ -65,7 +66,7 @@ services:
 
   web:
     container_name: nics_web_1
-    build: ../nics-www
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/web:latest
     depends_on:
       - emapi
       - geoserver
@@ -78,8 +79,7 @@ services:
 
   openam:
     container_name: nics_openam_1
-#    image: taborda/nicsdev_openambase
-    build: ../nics-openam
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:latest
     hostname: am.nicsdev.tabordasolutions.net
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
@@ -91,5 +91,6 @@ services:
       default:
         aliases:
           - am.nicsdev.tabordasolutions.net
+
 volumes:
   static:
