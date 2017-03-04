@@ -2,7 +2,7 @@ version: "2.1"
 services:
   emapi:
     container_name: nics_emapi_1
-    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/emapi:e1cfd9e
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/emapi:latest
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
     depends_on:
@@ -26,7 +26,7 @@ services:
 
   nicsweb:
     container_name: nics_nicsweb_1
-    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/nicsweb:60b05bb
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/nicsweb:latest
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
     depends_on:

@@ -1,10 +1,14 @@
 version: "2.1"
 services:
   emapi:
-    build: ../em-api
+    build:
+      context: ../em-api
+      dockerfile: ../em-api/dev-Dockerfile
 
   nicsweb:
-    build: ../nics-web
+    build:
+      context: ../nics-web
+      dockerfile: ../nics-web/dev-Dockerfile
 
   openam:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:dev-latest
