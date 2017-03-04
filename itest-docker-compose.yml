@@ -6,14 +6,14 @@ services:
       - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
 
   geoserver:
-    image: nics_postgis:configured
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:itest-configured
 
   nicsweb:
     volumes:
       - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
 
   postgis:
-    image: nics_postgis:configured
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/postgis:itest-configured
 
   proxy:
     container_name: nics_proxy_1
@@ -35,7 +35,7 @@ services:
       - /var/lib/docker/volumes/nics_config/www-responses.txt:/root/responses.txt
 
   openam:
-    image: nics_openam:configured
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:itest-configured
     hostname: am.nicsitest.tabordasolutions.net
     networks:
       default:
