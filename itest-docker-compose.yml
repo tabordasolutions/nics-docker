@@ -1,0 +1,46 @@
+version: "2.1"
+services:
+  emapi:
+    volumes:
+      - static:/var/lib/emapi/
+      - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
+
+  geoserver:
+    image: nics_postgis:configured
+
+  nicsweb:
+    volumes:
+      - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
+
+  postgis:
+    image: nics_postgis:configured
+
+  proxy:
+    container_name: nics_proxy_1
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/lib/docker/volumes/nics_config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      default:
+        aliases:
+          - www.nicsitest.tabordasolutions.net
+
+  web:
+    volumes:
+      - static:/var/www/html/
+      - /var/lib/docker/volumes/nics_config/www.conf:/etc/apache2/sites-available/nics.conf
+      - /var/lib/docker/volumes/nics_config/www-responses.txt:/root/responses.txt
+
+  openam:
+    image: nics_openam:configured
+    hostname: am.nicsitest.tabordasolutions.net
+    networks:
+      default:
+        aliases:
+          - am.nicsitest.tabordasolutions.net
+
+volumes:
+  static:

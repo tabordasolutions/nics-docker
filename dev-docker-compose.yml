@@ -5,3 +5,6 @@ services:
 
   nicsweb:
     build: ../nics-web
+
+  openam:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:dev-latest
