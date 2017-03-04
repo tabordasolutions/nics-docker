@@ -4,6 +4,7 @@ services:
     volumes:
       - static:/var/lib/emapi/
       - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
+      - /var/lib/docker/volumes/nics_config/context.xml:/usr/local/tomcat/conf/context.xml
 
   geoserver:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:itest-configured
