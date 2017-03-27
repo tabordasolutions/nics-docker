@@ -1,0 +1,47 @@
+version: "2.1"
+services:
+  emapi:
+    volumes:
+      - static:/var/lib/emapi/
+      - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
+      - /var/lib/docker/volumes/nics_config/context.xml:/usr/local/tomcat/conf/context.xml
+
+  geoserver:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:training-configured
+
+  nicsweb:
+    volumes:
+      - /var/lib/docker/volumes/nics_config:/opt/data/nics/config
+
+  postgis:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/postgis:training-configured
+
+  proxy:
+    container_name: nics_proxy_1
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/lib/docker/volumes/nics_config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      default:
+        aliases:
+          - www.scouttraining.tabordasolutions.net
+
+  web:
+    volumes:
+      - static:/var/www/html/
+      - /var/lib/docker/volumes/nics_config/www.conf:/etc/apache2/sites-available/nics.conf
+      - /var/lib/docker/volumes/nics_config/www-responses.txt:/root/responses.txt
+
+  openam:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:training-configured
+    hostname: am.scouttraining.tabordasolutions.net
+    networks:
+      default:
+        aliases:
+          - am.scouttraining.tabordasolutions.net
+
+volumes:
+  static:
