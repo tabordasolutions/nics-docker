@@ -5,6 +5,7 @@ services:
       context: ../em-api
     volumes:
       - ../em-api/config:/opt/data/nics/config/
+      - ../em-api/tomcat-config/context.xml:/usr/local/tomcat/conf/context.xml
 
   nicsweb:
     build:
