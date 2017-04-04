@@ -42,6 +42,12 @@ services:
       default:
         aliases:
           - am.scouttraining.tabordasolutions.net
+    ports:
+      - "4444:4444"
+      - "8000:8000"
+      - "8080:8080"
+      - "8443:8443"
+      - "50389:50389"
 
 volumes:
   static:
