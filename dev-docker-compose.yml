@@ -7,11 +7,16 @@ services:
       - ../em-api/config:/opt/data/nics/config/
       - ../em-api/tomcat-config/context.xml:/usr/local/tomcat/conf/context.xml
 
+  geoserver:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:dev-configured
   nicsweb:
     build:
       context: ../nics-web
     volumes:
       - ../nics-web/config:/opt/data/nics/config/
+
+  postgis:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/postgis:dev-configured
 
   openam:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:dev-latest
