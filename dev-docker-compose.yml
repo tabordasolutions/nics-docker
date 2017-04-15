@@ -13,5 +13,8 @@ services:
     volumes:
       - ../nics-web/config:/opt/data/nics/config/
 
+  postgis:
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/postgis:dev-configured
+
   openam:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:dev-latest
