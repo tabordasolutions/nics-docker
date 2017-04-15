@@ -1,0 +1,13 @@
+#!/bin/bash
+
+docker run -it --rm --network nics_default -e PGDATABASE=postgres nicsdb psql -c "CREATE USER nics WITH PASSWORD 'nics'"
+docker run -it --rm --network nics_default -e PGDATABASE=postgres nicsdb bash -c "cd /opt/nics/nics-db && ./create_db.sh nics nics"
+docker run -it --rm --network nics_default -e PGDATABASE=postgres nicsdb bash -c "cd /opt/nics/nics-db && ./create_data_dbs.sh nics"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db && ./scripts/create_workspace.sh nics 1 Default"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db && ./scripts/create_system.sh nics nicsweb Testing 1 1"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db && ./scripts/create_org.sh nics Testers Sacramento CA o1 8"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db && ./scripts/create_default_user.sh nics tester@tabordasolutions.net 1 1"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db && ./scripts/create_default_folders.sh nics 1"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db/datalayers/weather && ./weather_layers.sh nics 1"
+docker run -it --rm --network nics_default nicsdb bash -c "cd /opt/nics/nics-db/datalayers/maps && ./maps_layers.sh nics"
+
