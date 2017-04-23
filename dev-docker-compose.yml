@@ -40,20 +40,21 @@ services:
     environment:
       - NAME=beu
     ports:
-      - "42012:42012"
+      - "42012/udp:42012/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
 
   corpli:
     build:
       context: ../nics-core-processor/json-pli-consumer
+    hostname: corpli
     depends_on:
       - postgis
       - rabbitmq
     environment:
       - NAME=cor
     ports:
-      - "42010:42010"
+      - "42010/udp:42010/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
 
@@ -66,7 +67,7 @@ services:
     environment:
       - NAME=fku
     ports:
-      - "42011:42011"
+      - "42011/udp:42011/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
 
@@ -79,7 +80,7 @@ services:
     environment:
       - NAME=gst2gml
     ports:
-      - "42001:42001"
+      - "42001/udp:42001/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
 
@@ -92,7 +93,7 @@ services:
     environment:
       - NAME=lac
     ports:
-      - "42017:42017"
+      - "42017/udp:42017/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
 
@@ -118,6 +119,6 @@ services:
     environment:
       - NAME=slu
     ports:
-      - "42013:42013"
+      - "42013/udp:42013/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
