@@ -13,6 +13,7 @@ services:
     ports:
       - "7083:8000"
       - "8083:8080"
+      - "42000-42020"
     volumes:
       - static:/var/lib/emapi/
 
@@ -73,13 +74,18 @@ services:
       - openam
       - nicsweb
     ports:
-      - "8081:80"
+      - "8085:80"
     volumes:
       - static:/var/www/html/
 
   openam:
     container_name: nics_openam_1
+<<<<<<< HEAD
+    image: taborda/nicsdev_openambase
+#    build: ../nics-openam
+=======
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:latest
+>>>>>>> master
     hostname: am.nicsdev.tabordasolutions.net
     environment:
       - CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,address=8000,suspend=n,server=y
@@ -87,6 +93,11 @@ services:
       - "8000:8000"
       - "8080:8080"
       - "8443:8443"
+<<<<<<< HEAD
+#    volumes:
+#      - ~/.docker/volumes/nics/openam:/root/openam
+=======
+>>>>>>> master
     networks:
       default:
         aliases:

@@ -18,10 +18,18 @@ services:
 
   proxy:
     container_name: nics_proxy_1
+<<<<<<< HEAD
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:itest-configured
+    ports:
+      - "80:80"
+      - "443:443"
+      - "42000-42020:42000-42020/udp"
+=======
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
     ports:
       - "80:80"
       - "443:443"
+>>>>>>> master
     volumes:
       - /var/lib/docker/volumes/nics_config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     networks:
