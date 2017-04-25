@@ -48,7 +48,7 @@ services:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
     ports:
       - "3000:80"
-      - "3443:443"
+      - "443:443"
     depends_on:
       - web
     networks:

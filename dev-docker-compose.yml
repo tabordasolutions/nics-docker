@@ -12,7 +12,6 @@ services:
   geoserver:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:dev-configured
   nicsweb:
-    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/nicsweb:dev-configured
     build:
       context: ../nics-web
     volumes:
