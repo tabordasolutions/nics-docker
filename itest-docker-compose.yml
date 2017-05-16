@@ -24,6 +24,7 @@ services:
       - "443:443"
     volumes:
       - /var/lib/docker/volumes/nics_config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - /var/lib/docker/volumes/nics_config/itest-certificate.pem:/usr/local/etc/haproxy/certificate.pem
     networks:
       default:
         aliases:
