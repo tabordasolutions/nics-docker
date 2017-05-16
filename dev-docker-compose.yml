@@ -9,6 +9,16 @@ services:
 
   geoserver:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/geoserver:dev-configured
+
+  geodatafeed:
+    build:
+      context: ../nics-core-processor/geodatafeed-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    volumes:
+      - ../nics-core-processor/geodatafeed-consumer/config:/opt/nics/deploy/geodatafeed-consumer-6.2/config
+
   nicsweb:
     build:
       context: ../nics-web
@@ -20,3 +30,95 @@ services:
 
   openam:
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/openam:dev-latest
+
+  beupli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=beu
+    ports:
+      - "42012/udp:42012/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  corpli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    hostname: corpli
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=cor
+    ports:
+      - "42010/udp:42010/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  fkupli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=fku
+    ports:
+      - "42011/udp:42011/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  gst2gmlpli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=gst2gml
+    ports:
+      - "42001/udp:42001/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  lacpli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=lac
+    ports:
+      - "42017/udp:42017/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+# This one pulls from http://ocfawcfrestserviceprod.cloudapp.net/UnitLocations
+# Not sure it should enabled in development
+  ocfapli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=ocfa
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  slupli:
+    build:
+      context: ../nics-core-processor/json-pli-consumer
+    depends_on:
+      - postgis
+      - rabbitmq
+    environment:
+      - NAME=slu
+    ports:
+      - "42013/udp:42013/udp"
+    volumes:
+      - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
