@@ -47,8 +47,8 @@ services:
     container_name: nics_proxy_1
     image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:latest
     ports:
-      - "3000:80"
-      - "3443:443"
+      - "80:80"
+      - "443:443"
     depends_on:
       - web
     networks:
@@ -73,7 +73,7 @@ services:
       - openam
       - nicsweb
     ports:
-      - "8081:80"
+      - "8085:80"
     volumes:
       - static:/var/www/html/
 
