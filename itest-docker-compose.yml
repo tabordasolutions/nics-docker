@@ -44,5 +44,13 @@ services:
         aliases:
           - am.nicsitest.tabordasolutions.net
 
+  rawsprocessor:
+    build:
+      context: ../nics-core-processor/raws-feed-processor
+    depends_on:
+      - postgis
+    volumes:
+      - /var/lib/docker/volumes/nics_core_processor_config/raws-feed-processor/config:/opt/nics/deploy/raws-feed-processor-6.2/config
+
 volumes:
   static:
