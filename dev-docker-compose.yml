@@ -124,3 +124,11 @@ services:
       - "42013/udp:42013/udp"
     volumes:
       - ../nics-core-processor/json-pli-consumer/config:/opt/nics/deploy/json-pli-consumer-6.2/config
+
+  rawsprocessor:
+    build:
+      context: ../nics-core-processor/raws-feed-processor
+    depends_on:
+      - postgis
+    volumes:
+      - ../nics-core-processor/raws-feed-processor/config:/opt/nics/deploy/raws-feed-processor-6.2/config
