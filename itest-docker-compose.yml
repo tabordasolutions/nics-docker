@@ -45,8 +45,7 @@ services:
           - am.nicsitest.tabordasolutions.net
 
   rawsprocessor:
-    build:
-      context: ../nics-core-processor/raws-feed-processor
+    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/rawsprocessor:latest
     depends_on:
       - postgis
     volumes:
