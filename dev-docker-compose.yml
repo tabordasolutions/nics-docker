@@ -1,7 +1,5 @@
 version: "2.1"
 services:
-  proxy:
-    image: 618209257270.dkr.ecr.us-west-2.amazonaws.com/nics/proxy:dev-configured
   emapi:
     build:
       context: ../em-api
