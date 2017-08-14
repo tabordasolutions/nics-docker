@@ -23,8 +23,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /var/lib/docker/volumes/nics_config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - /var/lib/docker/volumes/nics_config/training-certificate.pem:/usr/local/etc/haproxy/certificate.pem
+      - /var/lib/docker/volumes/nics_config/haproxy:/usr/local/etc/haproxy
     networks:
       default:
         aliases:
