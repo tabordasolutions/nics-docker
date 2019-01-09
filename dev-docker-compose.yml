@@ -22,6 +22,7 @@ services:
   nicsweb:
     build:
       context: ../nics-web
+      dockerfile: dev-Dockerfile
     volumes:
       - ../nics-web/config:/opt/data/nics/config/
 
